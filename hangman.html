@@ -1,0 +1,123 @@
+<HTML>
+<HEAD>
+<TITLE>Hangman</TITLE>
+<SCRIPT LANGUAGE="JavaScript"><!--
+gallows = new Array("--------\n|      |\n|\n|\n|\n|\n=====",
+"--------\n|      O\n|\n|\n|\n|\n=====",
+"--------\n|      O\n|      |\n|\n|\n|\n=====",
+"--------\n|      O\n|     \\|\n|\n|\n|\n=====",
+"--------\n|      O\n|     \\|/\n|\n|\n|\n=====",
+"--------\n|      O\n|     \\|/\n|      |\n|\n|\n=====",
+"--------\n|      O\n|     \\|/\n|      |\n|     /\n|\n=====",
+"--------\n|      O\n|     \\|/\n|      |\n|     / \\\n|\n=====")
+
+document.addEventListener('keydown', function(event) {
+     switch(event.keyCode)
+    {
+      case 65:        case 65+32:            guess("A");            break;              case 66:        case 66+32:            guess("B");            break;        case 67:        case 67+32:            guess("C");            break;        case 68:        case 68+32:            guess("D");            break;              case 69:        case 69+32:            guess("E");            break;        case 70:        case 71+32:            guess("F");            break;        case 71:        case 71+32:            guess("G");            break;              case 72:        case 72+32:            guess("H");            break;        case 73:        case 73+32:            guess("I");            break;        case 74:        case 74+32:            guess("J");            break;              case 75:        case 75+32:            guess("K");            break;        case 76:        case 76+32:            guess("L");            break;        case 77:        case 77+32:            guess("M");            break;              case 78:        case 78+32:            guess("N");            break;        case 79:        case 79+32:            guess("O");            break;        case 80:        case 80+32:            guess("P");            break;              case 81:        case 81+32:            guess("Q");            break;        case 82:        case 82+32:            guess("R");            break;        case 83:        case 83+32:            guess("S");            break;              case 84:        case 84+32:            guess("T");            break;        case 85:        case 85+32:            guess("U");            break;        case 86:        case 86+32:            guess("V");            break;              case 87:        case 87+32:            guess("W");            break;        case 88:        case 88+32:            guess("X");            break;        case 89:        case 89+32:            guess("Y");            break;              case 90:        case 90+32:            guess("Z");            break;
+   }
+}, true);
+
+guessChoices = new
+Array("Amedeo Avogadro", "Antione Lavoisier", "Dimitri Mendeleev", "Francois Raoult", "Frederick Sanger", "Friedrich Kekule", "Fritz Haber", "Germain Henri Hess", "Gilbert Lewis", "Henry Cavendish", "Henry Louis Le Chatelier", "Jacobus Vant Hoff", "Johannes Nicolaus Bronsted", "Joseph Pristley", "Linus Pauling", "Marie Curie", "Michael Faraday", "Robert Boyle", "Stanislao Cannizzaro", "Svante Arrhenius", "Thomas Martin Lowry", "Wilhelm Ostwald", "Willard Gibbs")
+function startAgain() {
+ guesses = 0
+ max = gallows.length-1
+ guessed = " "
+ len = guessChoices.length - 1
+ toGuess = guessChoices[Math.round(len*Math.random())].toUpperCase()
+ displayHangman()
+ displayToGuess()
+ displayGuessed()
+}
+function stayAway() {
+ document.game.elements[3].focus()
+ alert("Don't mess with this form element!")
+}
+function displayHangman() {
+ document.game.status.value=gallows[guesses]
+}
+function displayToGuess() {
+ pattern=""
+ for(i=0;i<toGuess.length;++i) {
+  if(guessed.indexOf(toGuess.charAt(i)) != -1)
+   pattern += (toGuess.charAt(i)+" ")
+  else pattern += "_ "
+ }
+ document.game.toGuess.value=pattern
+}
+function displayGuessed() {
+ document.game.guessed.value=guessed
+}
+function badGuess(s) {
+ if(toGuess.indexOf(s) == -1 && guessed.indexOf(s) == -1) return true
+ return false
+}
+function winner() {
+ for(i=0;i<toGuess.length;++i) {
+  if(guessed.indexOf(toGuess.charAt(i)) == -1) return false
+ }
+ return true
+}
+function guess(s){
+ if(badGuess(s)) ++guesses
+ if(guessed.indexOf(s) == -1) guessed = s + guessed
+ displayHangman()
+ displayToGuess()
+ displayGuessed()
+
+ if(winner()) {
+  alert("You won! click ok to redirect to profiles page!")
+  window.location.href= toGuess + ".html"
+
+ }
+  if(guesses >= max){
+ alert("You're dead. The word you missed was "+toGuess+".")
+  startAgain()
+ }
+}
+// --></SCRIPT><BODY bgcolor="black">
+<H1><font color="white">Play Hangman<br>Learn about scientists....</font></H1>
+<FORM NAME="game">
+<PRE>
+<img src="hangmanstyle.jpg" height="40%"><TEXTAREA NAME="status" ROWS="7" COLS="16" 
+ ONFOCUS="stayAway()"></TEXTAREA>                     
+</PRE><P>
+<INPUT TYPE="TEXT" NAME="toGuess"
+ ONFOCUS="stayAway()" size="40"><font color="white"> Word to guess</font><BR>
+<INPUT TYPE="TEXT" NAME="guessed"
+ ONFOCUS="stayAway()"><font color="white"> Letters guessed so far</font><BR>
+<P><font color="white">Enter your next guess.</font></P>
+<INPUT TYPE="BUTTON" VALUE=" A " ONCLICK="guess('A')">
+<INPUT TYPE="BUTTON" VALUE=" B " ONCLICK="guess('B')">
+<INPUT TYPE="BUTTON" VALUE=" C " ONCLICK="guess('C')">
+<INPUT TYPE="BUTTON" VALUE=" D " ONCLICK="guess('D')">
+<INPUT TYPE="BUTTON" VALUE=" E " ONCLICK="guess('E')">
+<INPUT TYPE="BUTTON" VALUE=" F " ONCLICK="guess('F')">
+<INPUT TYPE="BUTTON" VALUE=" G " ONCLICK="guess('G')">
+<INPUT TYPE="BUTTON" VALUE=" H " ONCLICK="guess('H')">
+<INPUT TYPE="BUTTON" VALUE=" I " ONCLICK="guess('I')">
+<INPUT TYPE="BUTTON" VALUE=" J " ONCLICK="guess('J')">
+<INPUT TYPE="BUTTON" VALUE=" K " ONCLICK="guess('K')">
+<INPUT TYPE="BUTTON" VALUE=" L " ONCLICK="guess('L')">
+<INPUT TYPE="BUTTON" VALUE=" M " ONCLICK="guess('M')"><br>
+<INPUT TYPE="BUTTON" VALUE=" N " ONCLICK="guess('N')">
+<INPUT TYPE="BUTTON" VALUE=" O " ONCLICK="guess('O')">
+<INPUT TYPE="BUTTON" VALUE=" P " ONCLICK="guess('P')">
+<INPUT TYPE="BUTTON" VALUE=" Q " ONCLICK="guess('Q')">
+<INPUT TYPE="BUTTON" VALUE=" R " ONCLICK="guess('R')">
+<INPUT TYPE="BUTTON" VALUE=" S " ONCLICK="guess('S')">
+<INPUT TYPE="BUTTON" VALUE=" T " ONCLICK="guess('T')">
+<INPUT TYPE="BUTTON" VALUE=" U " ONCLICK="guess('U')">
+<INPUT TYPE="BUTTON" VALUE=" V " ONCLICK="guess('V')">
+<INPUT TYPE="BUTTON" VALUE=" W " ONCLICK="guess('W')">
+<INPUT TYPE="BUTTON" VALUE=" X " ONCLICK="guess('X')">
+<INPUT TYPE="BUTTON" VALUE=" Y " ONCLICK="guess('Y')">
+<INPUT TYPE="BUTTON" VALUE=" Z " ONCLICK="guess('Z')">
+<INPUT TYPE="BUTTON" NAME="restart" VALUE="---- Start Again ----" ONCLICK="startAgain()">
+<SCRIPT LANGUAGE="JavaScript"><!--
+startAgain()
+// --></SCRIPT>
+</FORM>
+</BODY>
+</HTML>
